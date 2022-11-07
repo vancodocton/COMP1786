@@ -1,4 +1,4 @@
-package com.example.comp1786;
+package uk.ac.gre.nt4738f.comp1786;
 
 import org.junit.Test;
 

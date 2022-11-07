@@ -1,4 +1,4 @@
-package com.example.comp1786;
+package uk.ac.gre.nt4738f.comp1786;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.example.comp1786", appContext.getPackageName());
+        assertEquals("uk.ac.gre.nt4738f.comp1786", appContext.getPackageName());
     }
 }
