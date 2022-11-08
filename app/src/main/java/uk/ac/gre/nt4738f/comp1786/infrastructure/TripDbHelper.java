@@ -69,7 +69,7 @@ public class TripDbHelper extends SQLiteOpenHelper {
                 String name = cursor.getString(1);
                 String destination = cursor.getString(2);
                 LocalDate date = LocalDate.parse(cursor.getString(3));
-                Boolean isRiskAssessment = cursor.getInt(4) == 0;
+                Boolean isRiskAssessment = cursor.getInt(4) == 1;
                 String description = cursor.getString(5);
                 storeTrips.add(new Trip(id, name, destination, date, isRiskAssessment, description));
             }

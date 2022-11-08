@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">COMP1786</string>
+
+    <string name="is_risk_assessment_text">"Is Risk Assessment: %1$s"</string>
+    <string name="text_yes">Yes</string>
+    <string name="text_no">No</string>
+    <string name="hint_TripName">Name of the trip</string>
+    <string name="hint_Destination">Destination</string>
+    <string name="text_require_risk_assessment">Require Risk Assessment?</string>
+    <string name="text_btn_create">Create</string>
 </resources>
