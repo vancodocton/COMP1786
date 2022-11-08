@@ -4,8 +4,12 @@
     <string name="is_risk_assessment_text">"Is Risk Assessment: %1$s"</string>
     <string name="text_yes">Yes</string>
     <string name="text_no">No</string>
-    <string name="hint_TripName">Name of the trip</string>
-    <string name="hint_Destination">Destination</string>
+    <string name="hint_TripName">Summer Vacation</string>
+    <string name="hint_Destination">Ha Long Bay</string>
     <string name="text_require_risk_assessment">Require Risk Assessment?</string>
     <string name="text_btn_create">Create</string>
+    <string name="textLabelTripName">Trip name</string>
+    <string name="textLabelTripDestination">Trip Destination</string>
+    <string name="textLabelTripDate">Trip Date</string>
+    <string name="textPlaceholderTripDate">Click here to show DatePicker</string>
 </resources>
