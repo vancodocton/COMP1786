@@ -12,4 +12,10 @@
     <string name="textLabelTripDestination">Trip Destination</string>
     <string name="textLabelTripDate">Trip Date</string>
     <string name="textPlaceholderTripDate">Click here to show DatePicker</string>
+    <string name="textLabelExpenseType">Expense Type</string>
+    <string name="hint_ExpenseType">Food</string>
+    <string name="textLabelExpenseTime">Expense Time</string>
+    <string name="textPlaceholderExpenseTime">Click here to pick time of Expense</string>
+    <string name="hint_ExpenseAmount">1000</string>
+    <string name="textLabelExpenseAmount">Expense Amount</string>
 </resources>
