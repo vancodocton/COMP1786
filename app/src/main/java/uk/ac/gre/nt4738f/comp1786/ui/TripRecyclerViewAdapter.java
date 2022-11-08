@@ -4,7 +4,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,9 +17,11 @@ import uk.ac.gre.nt4738f.comp1786.core.entities.Trip;
 
 public class TripRecyclerViewAdapter extends RecyclerView.Adapter<TripRecyclerViewAdapter.TripViewHolder> {
 
+    private final IOnRecycleItemClickListener listener;
     private final List<Trip> trips;
 
-    public TripRecyclerViewAdapter(List<Trip> items) {
+    public TripRecyclerViewAdapter(IOnRecycleItemClickListener listener, List<Trip> items) {
+        this.listener = listener;
         trips = items;
     }
 
@@ -42,8 +43,10 @@ public class TripRecyclerViewAdapter extends RecyclerView.Adapter<TripRecyclerVi
         else
             viewHolder.isRiskAssessment.setText(viewHolder.view.getContext().getString(R.string.is_risk_assessment_text, "False"));
 
-        viewHolder.view.setOnClickListener(view -> Toast.makeText(view.getContext(), "Id: " + trip.id, Toast.LENGTH_SHORT)
-                .show());
+        viewHolder.view.setOnClickListener(view -> {
+            //Toast.makeText(view.getContext(), "Id: " + trip.id, Toast.LENGTH_SHORT).show();
+            listener.onClick(trip.id);
+        });
     }
 
     @Override

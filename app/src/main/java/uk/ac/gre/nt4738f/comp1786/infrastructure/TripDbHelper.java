@@ -60,7 +60,8 @@ public class TripDbHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<Trip> listTrips() {
-        String sql = "select * from " + TABLE_TRIP;
+        String sql = "SELECT * FROM " + TABLE_TRIP +
+                " ORDER BY Date DESC, Id DESC";
         SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<Trip> storeTrips = new ArrayList<>();
         Cursor cursor = db.rawQuery(sql, null);
@@ -113,7 +114,9 @@ public class TripDbHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<Expense> listExpensesOfTrip(int tripId) {
-        String sql = "select * from " + TABLE_EXPENSE + " WHERE TripId = " + tripId;
+        String sql = "select * from " + TABLE_EXPENSE +
+                " WHERE TripId = " + tripId +
+                " ORDER BY Time DESC, Id DESC";
         SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<Expense> storeItems = new ArrayList<>();
         Cursor cursor = db.rawQuery(sql, null);

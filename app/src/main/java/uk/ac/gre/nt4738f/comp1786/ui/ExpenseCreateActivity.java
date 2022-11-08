@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
@@ -35,7 +34,7 @@ public class ExpenseCreateActivity extends AppCompatActivity implements IUpdateD
         setContentView(R.layout.activity_expense_create);
         dbHelper = new TripDbHelper(getApplicationContext());
         expenseValidator = new ExpenseValidator();
-        tripId = 1;
+        tripId = getIntent().getIntExtra(TripDetailsActivity.EXTRA_TRIP_ID, 0);
 
         ((TextView) findViewById(R.id.textViewExpenseTime))
                 .setText(LocalDate.now().toString());
@@ -58,12 +57,10 @@ public class ExpenseCreateActivity extends AppCompatActivity implements IUpdateD
                 Log.i(ExpenseCreateActivity.this.toString(), String.format("Created expense with id '%d'.", id));
 
                 Intent intent = new Intent(ExpenseCreateActivity.this, TripDetailsActivity.class);
-
-                startActivity(intent);
+                setResult(RESULT_OK);
+                finish();
             } catch (Exception e) {
-                Log.e(ExpenseCreateActivity.this.toString(), "Created expense failed.", e);
-                Toast.makeText(getApplicationContext(), "Fail", Toast.LENGTH_SHORT)
-                        .show();
+                Log.e(ExpenseCreateActivity.this.toString(), "Create expense failed.", e);
             }
         }
     }

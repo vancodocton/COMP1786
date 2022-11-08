@@ -14,21 +14,27 @@
         tools:targetApi="31">
         <activity
             android:name=".ui.TripDetailsActivity"
-            android:exported="false">
+            android:exported="false"
+            android:label="Trip Details"
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".ui.TripCreateActivity"
-            android:exported="false">
+            android:exported="false"
+            android:label="Create Trip"
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".ui.ExpenseCreateActivity"
-            android:exported="false">
+            android:exported="false"
+            android:label="Create Trip Expense"
+            android:parentActivityName=".ui.TripDetailsActivity">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
