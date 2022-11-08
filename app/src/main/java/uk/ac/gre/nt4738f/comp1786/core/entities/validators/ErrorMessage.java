@@ -25,4 +25,9 @@ public class ErrorMessage {
         String template = "Empty or blank property '%s'";
         return new ErrorMessage(propertyName, template);
     }
+
+    public static ErrorMessage InvalidPositiveNumberMessage(String propertyName) {
+        String template = "Invalid Invalid Positive Number Property '%s'";
+        return new ErrorMessage(propertyName, template);
+    }
 }

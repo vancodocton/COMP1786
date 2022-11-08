@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import uk.ac.gre.nt4738f.comp1786.core.entities.Expense;
 import uk.ac.gre.nt4738f.comp1786.core.entities.Trip;
 
 public class TripDbHelper extends SQLiteOpenHelper {
@@ -79,10 +80,56 @@ public class TripDbHelper extends SQLiteOpenHelper {
         return storeTrips;
     }
 
+    public Trip getTripById(int tripId) {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(
+                "SELECT * FROM " + TABLE_TRIP + " WHERE Id = " + tripId + " LIMIT 1", null
+        );
+        if (cursor.moveToFirst()) {
+            int id = cursor.getInt(0);
+            String name = cursor.getString(1);
+            String destination = cursor.getString(2);
+            LocalDate date = LocalDate.parse(cursor.getString(3));
+            Boolean isRiskAssessment = cursor.getInt(4) == 1;
+            String description = cursor.getString(5);
+            return new Trip(id, name, destination, date, isRiskAssessment, description);
+        }
+        cursor.close();
+        return null;
+    }
+
     public long insertTripOrThrow(Trip trip) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues cv = trip.toContentValues();
 
         return db.insertOrThrow(TripDbHelper.TABLE_TRIP, null, cv);
+    }
+
+    public long insertExpenseOrThrow(Expense expense) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues cv = expense.toContentValues();
+
+        return db.insertOrThrow(TripDbHelper.TABLE_EXPENSE, null, cv);
+    }
+
+    public ArrayList<Expense> listExpensesOfTrip(int tripId) {
+        String sql = "select * from " + TABLE_EXPENSE + " WHERE TripId = " + tripId;
+        SQLiteDatabase db = this.getReadableDatabase();
+        ArrayList<Expense> storeItems = new ArrayList<>();
+        Cursor cursor = db.rawQuery(sql, null);
+        if (cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(0);
+
+                String type = cursor.getString(2);
+                LocalDate time = LocalDate.parse(cursor.getString(3));
+                double amount = cursor.getDouble(4);
+
+                storeItems.add(new Expense(id, tripId, type, time, amount));
+            }
+            while (cursor.moveToNext());
+        }
+        cursor.close();
+        return storeItems;
     }
 }
