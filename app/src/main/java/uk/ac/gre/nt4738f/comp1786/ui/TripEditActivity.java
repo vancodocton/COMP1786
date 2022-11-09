@@ -2,6 +2,7 @@ package uk.ac.gre.nt4738f.comp1786.ui;
 
 import static uk.ac.gre.nt4738f.comp1786.ui.TripDetailsActivity.EXTRA_TRIP_ID;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,7 +14,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 

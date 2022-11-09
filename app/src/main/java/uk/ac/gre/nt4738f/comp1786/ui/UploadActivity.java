@@ -200,7 +200,7 @@ public class UploadActivity extends AppCompatActivity {
             this.exception = exception;
         }
 
-        public static Result succeed = new Result(true, null, null);
+        public static final Result succeed = new Result(true, null, null);
 
         public static Result succeed(String message) {
             return new Result(true, message, null);

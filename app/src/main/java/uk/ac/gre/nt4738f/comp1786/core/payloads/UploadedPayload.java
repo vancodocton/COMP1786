@@ -8,12 +8,12 @@ import java.util.ArrayList;
 
 public class UploadedPayload {
     @NotNull
-    public String userId;
+    public final String userId;
 
-    public ArrayList<UploadedExpense> detailList = new ArrayList<>();
+    public final ArrayList<UploadedExpense> detailList;
 
     public UploadedPayload(@NonNull String userId, @NotNull ArrayList<UploadedExpense> detailList) {
         this.userId = userId;
-        this.detailList.addAll(detailList);
+        this.detailList =detailList;
     }
 }
