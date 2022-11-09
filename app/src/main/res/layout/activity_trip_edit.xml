@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.TripCreateActivity">
+
+    <TextView
+        android:id="@+id/textLabelTripName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="8dp"
+        android:text="@string/textLabelTripName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextTripName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="8dp"
+        android:autofillHints="tripName"
+        android:ems="10"
+        android:hint="@string/hint_TripName"
+        android:inputType="text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textLabelTripName" />
+
+    <TextView
+        android:id="@+id/textLabelTripDestination"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="8dp"
+        android:text="@string/textLabelTripDestination"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTripName" />
+
+    <EditText
+        android:id="@+id/editTextTripDestination"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="8dp"
+        android:autofillHints="dependentLocality"
+        android:ems="10"
+        android:hint="@string/hint_Destination"
+        android:inputType="textPostalAddress"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textLabelTripDestination" />
+
+    <TextView
+        android:id="@+id/textLabelTripDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="8dp"
+        android:text="@string/textLabelTripDate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTripDestination" />
+
+    <TextView
+        android:id="@+id/textViewDatePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="8dp"
+        android:onClick="showTripDatePickerDialog"
+        android:text="@string/textPlaceholderTripDate"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textLabelTripDate" />
+
+    <TextView
+        android:id="@+id/textLabelRiskAssessment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/text_require_risk_assessment"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDatePicker" />
+
+    <RadioGroup
+        android:id="@+id/radioGroupTripCreateRiskAssessment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textLabelRiskAssessment">
+
+        <RadioButton
+            android:id="@+id/radioButtonYes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_yes" />
+
+        <RadioButton
+            android:id="@+id/radioButtonNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="@string/text_no" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btnCreateTripSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/text_btn_create"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroupTripCreateRiskAssessment" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

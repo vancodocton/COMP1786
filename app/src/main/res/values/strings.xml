@@ -20,8 +20,17 @@
     <string name="textLabelExpenseAmount">Expense Amount</string>
     <string name="server_origin">https://comp1786.azurewebsites.net</string>
     <string name="label_btn_upload">Upload</string>
-    <string name="content_description_search">Search</string>
+
+    <string name="add">Add</string>
+    <string name="edit">Edit</string>
     <string name="search">Search</string>
-    <string name="content_description_delete">Delete</string>
     <string name="delete">Delete</string>
+    <string name="content_description_add_trip">Add trip</string>
+    <string name="content_description_edit_trip">Edit trip</string>
+    <string name="content_description_delete_trip">Delete trip</string>
+    <string name="content_description_search_trip">Search Trip</string>
+    <string name="content_description_delete_all_trips">Delete all trips</string>
+    <string name="content_description_add_expense">Add expense</string>
+    <string name="content_description_upload">Upload to Cloud</string>
+    <string name="upload">Upload</string>
 </resources>

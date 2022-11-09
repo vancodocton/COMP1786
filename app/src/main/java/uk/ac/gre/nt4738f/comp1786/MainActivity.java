@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -33,7 +32,6 @@ import uk.ac.gre.nt4738f.comp1786.ui.UploadActivity;
 public class MainActivity extends AppCompatActivity implements DeleteConfirmDialogFragment.Listener {
     TripDbHelper dbHelper;
     private RecyclerView recyclerView;
-    private Button createBtn;
     private boolean isReload = false;
     private TripRecyclerViewAdapter recyclerAdapter;
     private ArrayList<Trip> trips;
@@ -49,16 +47,42 @@ public class MainActivity extends AppCompatActivity implements DeleteConfirmDial
         topAppBar.setTitle(getTitle());
 
         recyclerView = findViewById(R.id.recyclerViewTrips);
-        createBtn = findViewById(R.id.btnCreateTrip);
 
-        setTripCreateBtn();
-
-        Button uploadBtn = findViewById(R.id.buttonUpload);
-        uploadBtn.setOnClickListener(view -> {
-            Intent intent = new Intent(MainActivity.this, UploadActivity.class);
-            startActivity(intent);
-        });
         setTripRecyclerView();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.trip_list_top_app_bar, menu);
+        return true;
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.add:
+                Intent intent = new Intent(MainActivity.this, TripCreateActivity.class);
+                tripCreateActivityResultLauncher.launch(intent);
+                return true;
+            case R.id.delete:
+                DialogFragment deleteConfirmFragment = new DeleteConfirmDialogFragment("all trips");
+                deleteConfirmFragment.show(getSupportFragmentManager(), "DeleteConfirm");
+                return true;
+            case R.id.search:
+                Toast.makeText(
+                        getApplicationContext(),
+                        "You asked to exit, but why not start another app?",
+                        Toast.LENGTH_LONG
+                ).show();
+                return true;
+            case R.id.upload:
+                Intent uploadIntent = new Intent(MainActivity.this, UploadActivity.class);
+                startActivity(uploadIntent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -73,13 +97,6 @@ public class MainActivity extends AppCompatActivity implements DeleteConfirmDial
         }
     }
 
-    private void setTripCreateBtn() {
-        createBtn.setOnClickListener(view -> {
-            Intent intent = new Intent(MainActivity.this, TripCreateActivity.class);
-            tripCreateActivityResultLauncher.launch(intent);
-        });
-    }
-
     private final ActivityResultLauncher<Intent> tripCreateActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
@@ -88,10 +105,17 @@ public class MainActivity extends AppCompatActivity implements DeleteConfirmDial
                     Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT)
                             .show();
                     isReload = true;
-                } else {
-                    Toast.makeText(getApplicationContext(), "Fail", Toast.LENGTH_SHORT)
+                }
+            });
+
+    private final ActivityResultLauncher<Intent> tripDetailsActivityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                int resultCode = result.getResultCode();
+                if (resultCode == Activity.RESULT_OK) {
+                    Toast.makeText(getApplicationContext(), "Deleted Success.", Toast.LENGTH_SHORT)
                             .show();
-                    isReload = false;
+                    isReload = true;
                 }
             });
 
@@ -126,32 +150,9 @@ public class MainActivity extends AppCompatActivity implements DeleteConfirmDial
         public void onClick(int tripId) {
             Intent intent = new Intent(context, TripDetailsActivity.class);
             intent.putExtra(TripDetailsActivity.EXTRA_TRIP_ID, tripId);
-            startActivity(intent);
+
+            tripDetailsActivityResultLauncher.launch(intent);
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.top_app_bar, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.delete:
-                DialogFragment deleteConfirmFragment = new DeleteConfirmDialogFragment("all trips");
-                deleteConfirmFragment.show(getSupportFragmentManager(), "DeleteConfirm");
-                return true;
-            case R.id.search:
-                Toast.makeText(
-                        getApplicationContext(),
-                        "You asked to exit, but why not start another app?",
-                        Toast.LENGTH_LONG
-                ).show();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 }

@@ -16,8 +16,19 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ui.TripEditActivity"
+            android:exported="false"
+            android:label="Edit Trip"
+            android:parentActivityName=".ui.TripDetailsActivity">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".ui.UploadActivity"
-            android:exported="false">
+            android:exported="false"
+            android:label="Upload to Cloud"
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -55,7 +66,6 @@
             android:theme="@style/Theme.COMP1786.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 

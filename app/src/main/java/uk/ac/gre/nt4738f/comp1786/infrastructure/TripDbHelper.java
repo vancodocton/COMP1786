@@ -107,6 +107,14 @@ public class TripDbHelper extends SQLiteOpenHelper {
         return db.insertOrThrow(TripDbHelper.TABLE_TRIP, null, cv);
     }
 
+    public long updateTripOrThrow(int tripId, Trip trip) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues cv = trip.toContentValues();
+
+        return db.update(TABLE_TRIP, cv, "Id = " + tripId, null);
+    }
+
     public long insertExpenseOrThrow(Expense expense) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues cv = expense.toContentValues();
@@ -114,10 +122,14 @@ public class TripDbHelper extends SQLiteOpenHelper {
         return db.insertOrThrow(TripDbHelper.TABLE_EXPENSE, null, cv);
     }
 
-    public int deleteAllTrips()
-    {
+    public int deleteAllTrips() {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLE_TRIP, null, null);
+    }
+
+    public int deleteTripById(int tripId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_TRIP, "Id = " + tripId, null);
     }
 
     public ArrayList<Expense> listExpensesOfTrip(int tripId) {
