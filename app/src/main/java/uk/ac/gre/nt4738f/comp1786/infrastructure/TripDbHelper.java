@@ -114,6 +114,12 @@ public class TripDbHelper extends SQLiteOpenHelper {
         return db.insertOrThrow(TripDbHelper.TABLE_EXPENSE, null, cv);
     }
 
+    public int deleteAllTrips()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_TRIP, null, null);
+    }
+
     public ArrayList<Expense> listExpensesOfTrip(int tripId) {
         String sql = "select * from " + TABLE_EXPENSE +
                 " WHERE TripId = " + tripId +

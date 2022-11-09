@@ -1,5 +1,6 @@
 package uk.ac.gre.nt4738f.comp1786;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +15,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,17 +23,20 @@ import java.util.ArrayList;
 
 import uk.ac.gre.nt4738f.comp1786.core.entities.Trip;
 import uk.ac.gre.nt4738f.comp1786.infrastructure.TripDbHelper;
+import uk.ac.gre.nt4738f.comp1786.ui.DeleteConfirmDialogFragment;
 import uk.ac.gre.nt4738f.comp1786.ui.IOnRecycleItemClickListener;
 import uk.ac.gre.nt4738f.comp1786.ui.TripCreateActivity;
 import uk.ac.gre.nt4738f.comp1786.ui.TripDetailsActivity;
 import uk.ac.gre.nt4738f.comp1786.ui.TripRecyclerViewAdapter;
 import uk.ac.gre.nt4738f.comp1786.ui.UploadActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements DeleteConfirmDialogFragment.Listener {
     TripDbHelper dbHelper;
     private RecyclerView recyclerView;
     private Button createBtn;
-    private boolean isReload = true;
+    private boolean isReload = false;
+    private TripRecyclerViewAdapter recyclerAdapter;
+    private ArrayList<Trip> trips;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,13 +58,17 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, UploadActivity.class);
             startActivity(intent);
         });
+        setTripRecyclerView();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     protected void onResume() {
         super.onResume();
         if (isReload) {
-            setTripRecyclerView();
+            trips.clear();
+            trips.addAll(dbHelper.listTrips());
+            recyclerAdapter.notifyDataSetChanged();
             isReload = false;
         }
     }
@@ -87,11 +96,23 @@ public class MainActivity extends AppCompatActivity {
             });
 
     private void setTripRecyclerView() {
-        ArrayList<Trip> trips = dbHelper.listTrips();
-        TripRecyclerViewAdapter recyclerAdapter = new TripRecyclerViewAdapter(new TripOnClickListener(MainActivity.this), trips);
+
+        trips = dbHelper.listTrips();
+        recyclerAdapter = new TripRecyclerViewAdapter(new TripOnClickListener(MainActivity.this), trips);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(recyclerAdapter);
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    @Override
+    public void onDeleteConfirmDialogPositiveClick(DialogFragment dialog) {
+        int row = dbHelper.deleteAllTrips();
+        Toast.makeText(this, "Deleted all " + row + "trips.", Toast.LENGTH_SHORT)
+                .show();
+        isReload = true;
+        trips.clear();
+        recyclerAdapter.notifyDataSetChanged();
     }
 
     public class TripOnClickListener implements IOnRecycleItemClickListener {
@@ -119,6 +140,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.delete:
+                DialogFragment deleteConfirmFragment = new DeleteConfirmDialogFragment("all trips");
+                deleteConfirmFragment.show(getSupportFragmentManager(), "DeleteConfirm");
                 return true;
             case R.id.search:
                 Toast.makeText(
