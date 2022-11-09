@@ -2,11 +2,13 @@ package uk.ac.gre.nt4738f.comp1786;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -54,6 +56,11 @@ public class MainActivity extends AppCompatActivity implements DeleteConfirmDial
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.trip_list_top_app_bar, menu);
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
         return true;
     }
 
@@ -68,13 +75,6 @@ public class MainActivity extends AppCompatActivity implements DeleteConfirmDial
             case R.id.delete:
                 DialogFragment deleteConfirmFragment = new DeleteConfirmDialogFragment("all trips");
                 deleteConfirmFragment.show(getSupportFragmentManager(), "DeleteConfirm");
-                return true;
-            case R.id.search:
-                Toast.makeText(
-                        getApplicationContext(),
-                        "You asked to exit, but why not start another app?",
-                        Toast.LENGTH_LONG
-                ).show();
                 return true;
             case R.id.upload:
                 Intent uploadIntent = new Intent(MainActivity.this, UploadActivity.class);
@@ -154,5 +154,4 @@ public class MainActivity extends AppCompatActivity implements DeleteConfirmDial
             tripDetailsActivityResultLauncher.launch(intent);
         }
     }
-
 }
