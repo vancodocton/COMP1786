@@ -5,10 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
@@ -28,6 +30,7 @@ public class ExpenseCreateActivity extends AppCompatActivity implements IUpdateD
     private int tripId;
     IEntityValidator<Expense> expenseValidator;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +44,16 @@ public class ExpenseCreateActivity extends AppCompatActivity implements IUpdateD
 
         Button btnSave = findViewById(R.id.btnCreateExpenseSave);
         btnSave.setOnClickListener(view -> clickOnSaveBtn());
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home)
+        {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void clickOnSaveBtn() {

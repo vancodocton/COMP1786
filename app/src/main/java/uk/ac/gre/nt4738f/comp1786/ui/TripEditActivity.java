@@ -5,6 +5,7 @@ import static uk.ac.gre.nt4738f.comp1786.ui.TripDetailsActivity.EXTRA_TRIP_ID;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -45,6 +46,15 @@ public class TripEditActivity extends AppCompatActivity implements IUpdateDate {
 
         setTripEditSaveBtn();
         setTripForEdit();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void setTripEditSaveBtn() {

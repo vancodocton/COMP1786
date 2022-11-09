@@ -69,6 +69,9 @@ public class TripDetailsActivity extends AppCompatActivity implements DeleteConf
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
             case R.id.add:
                 Intent intent = new Intent(TripDetailsActivity.this, ExpenseCreateActivity.class);
                 intent.putExtra(EXTRA_TRIP_ID, tripId);

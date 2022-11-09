@@ -3,6 +3,7 @@ package uk.ac.gre.nt4738f.comp1786.ui;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -46,6 +47,15 @@ public class UploadActivity extends AppCompatActivity {
             Thread t1 = new Thread(myTask, "JSON Thread");
             t1.start();
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private String getUploadedPayload() {
