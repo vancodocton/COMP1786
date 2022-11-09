@@ -9,12 +9,12 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
 public class DeleteConfirmDialogFragment extends DialogFragment {
-    public interface Listener {
+    public interface IOnButtonClickListener {
         void onDeleteConfirmDialogPositiveClick(DialogFragment dialog);
     }
 
     private final String deletedTargetName;
-    Listener listener;
+    IOnButtonClickListener listener;
 
     public DeleteConfirmDialogFragment(String deletedTargetName) {
         super();
@@ -25,7 +25,7 @@ public class DeleteConfirmDialogFragment extends DialogFragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         try {
-            listener = (Listener) context;
+            listener = (IOnButtonClickListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException("Caller must implement DeleteConfirmDialogFragment.Listener");
         }

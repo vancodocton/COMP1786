@@ -25,13 +25,14 @@ import java.util.ArrayList;
 import uk.ac.gre.nt4738f.comp1786.core.entities.Trip;
 import uk.ac.gre.nt4738f.comp1786.infrastructure.TripDbHelper;
 import uk.ac.gre.nt4738f.comp1786.ui.DeleteConfirmDialogFragment;
-import uk.ac.gre.nt4738f.comp1786.ui.IOnRecycleItemClickListener;
 import uk.ac.gre.nt4738f.comp1786.ui.TripCreateActivity;
 import uk.ac.gre.nt4738f.comp1786.ui.TripDetailsActivity;
 import uk.ac.gre.nt4738f.comp1786.ui.TripRecyclerViewAdapter;
 import uk.ac.gre.nt4738f.comp1786.ui.UploadActivity;
 
-public class MainActivity extends AppCompatActivity implements DeleteConfirmDialogFragment.Listener {
+public class MainActivity extends AppCompatActivity
+        implements DeleteConfirmDialogFragment.IOnButtonClickListener,
+        TripRecyclerViewAdapter.IOnViewHolderListener {
     TripDbHelper dbHelper;
     private RecyclerView recyclerView;
     private boolean isReload = false;
@@ -122,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements DeleteConfirmDial
     private void setTripRecyclerView() {
 
         trips = dbHelper.listTrips();
-        recyclerAdapter = new TripRecyclerViewAdapter(new TripOnClickListener(MainActivity.this), trips);
+        recyclerAdapter = new TripRecyclerViewAdapter(this, trips);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(recyclerAdapter);
@@ -139,19 +140,11 @@ public class MainActivity extends AppCompatActivity implements DeleteConfirmDial
         recyclerAdapter.notifyDataSetChanged();
     }
 
-    public class TripOnClickListener implements IOnRecycleItemClickListener {
-        private final Context context;
+    @Override
+    public void onTripViewHolderClick(int tripId) {
+        Intent intent = new Intent(this, TripDetailsActivity.class);
+        intent.putExtra(TripDetailsActivity.EXTRA_TRIP_ID, tripId);
 
-        public TripOnClickListener(Context context) {
-
-            this.context = context;
-        }
-
-        public void onClick(int tripId) {
-            Intent intent = new Intent(context, TripDetailsActivity.class);
-            intent.putExtra(TripDetailsActivity.EXTRA_TRIP_ID, tripId);
-
-            tripDetailsActivityResultLauncher.launch(intent);
-        }
+        tripDetailsActivityResultLauncher.launch(intent);
     }
 }

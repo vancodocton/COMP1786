@@ -25,7 +25,7 @@ import uk.ac.gre.nt4738f.comp1786.core.entities.Expense;
 import uk.ac.gre.nt4738f.comp1786.core.entities.Trip;
 import uk.ac.gre.nt4738f.comp1786.infrastructure.TripDbHelper;
 
-public class TripDetailsActivity extends AppCompatActivity implements DeleteConfirmDialogFragment.Listener {
+public class TripDetailsActivity extends AppCompatActivity implements DeleteConfirmDialogFragment.IOnButtonClickListener {
     public static final String EXTRA_TRIP_ID = "uk.ac.gre.nt4738f.comp1786.EXTRA_TRIP_ID";
     private TripDbHelper dbHelper;
 

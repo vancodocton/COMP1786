@@ -16,11 +16,14 @@ import uk.ac.gre.nt4738f.comp1786.core.entities.Trip;
 
 
 public class TripRecyclerViewAdapter extends RecyclerView.Adapter<TripRecyclerViewAdapter.TripViewHolder> {
+    public interface IOnViewHolderListener {
+        void onTripViewHolderClick(int tripId);
+    }
 
-    private final IOnRecycleItemClickListener listener;
+    private final IOnViewHolderListener listener;
     private final List<Trip> trips;
 
-    public TripRecyclerViewAdapter(IOnRecycleItemClickListener listener, List<Trip> items) {
+    public TripRecyclerViewAdapter(IOnViewHolderListener listener, List<Trip> items) {
         this.listener = listener;
         trips = items;
     }
@@ -43,10 +46,7 @@ public class TripRecyclerViewAdapter extends RecyclerView.Adapter<TripRecyclerVi
         else
             viewHolder.isRiskAssessment.setText(viewHolder.view.getContext().getString(R.string.is_risk_assessment_text, "False"));
 
-        viewHolder.view.setOnClickListener(view -> {
-            //Toast.makeText(view.getContext(), "Id: " + trip.id, Toast.LENGTH_SHORT).show();
-            listener.onClick(trip.id);
-        });
+        viewHolder.view.setOnClickListener(view -> listener.onTripViewHolderClick(trip.id));
     }
 
     @Override
@@ -54,7 +54,7 @@ public class TripRecyclerViewAdapter extends RecyclerView.Adapter<TripRecyclerVi
         return trips.size();
     }
 
-    public class TripViewHolder extends RecyclerView.ViewHolder {
+    public static class TripViewHolder extends RecyclerView.ViewHolder {
         public final TextView nameTxt;
         public final TextView destinationTxt;
         public final TextView dateTxt;
@@ -68,7 +68,6 @@ public class TripRecyclerViewAdapter extends RecyclerView.Adapter<TripRecyclerVi
             destinationTxt = view.findViewById(R.id.textViewDestination);
             dateTxt = view.findViewById(R.id.textViewDate);
             isRiskAssessment = view.findViewById(R.id.textViewRiskAssessment);
-
         }
     }
 }
