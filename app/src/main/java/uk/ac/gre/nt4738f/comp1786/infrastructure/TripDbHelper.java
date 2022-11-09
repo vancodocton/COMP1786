@@ -193,4 +193,36 @@ public class TripDbHelper extends SQLiteOpenHelper {
 
         return storeItems;
     }
+
+    public ArrayList<Trip> searchTripByKeyword(String query) {
+        String[] raw = query.trim().split(" ");
+
+        ArrayList<String> words = new ArrayList<>();
+
+        for (String word : raw) {
+            if (!word.trim().isEmpty())
+                words.add("lower(Name) LIKE '%" + word.toLowerCase() + "%'");
+        }
+
+        String sql = " SELECT * FROM " + TABLE_TRIP + " WHERE " +
+                String.join(" OR ", words);
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(sql, null);
+        ArrayList<Trip> searched = new ArrayList<>();
+        if (cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(0);
+                String name = cursor.getString(1);
+                String destination = cursor.getString(2);
+                LocalDate date = LocalDate.parse(cursor.getString(3));
+                Boolean isRiskAssessment = cursor.getInt(4) == 1;
+                String description = cursor.getString(5);
+                searched.add(new Trip(id, name, destination, date, isRiskAssessment, description));
+            }
+            while (cursor.moveToNext());
+        }
+        cursor.close();
+        return searched;
+    }
 }

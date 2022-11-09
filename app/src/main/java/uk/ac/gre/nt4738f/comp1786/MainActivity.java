@@ -121,7 +121,6 @@ public class MainActivity extends AppCompatActivity
             });
 
     private void setTripRecyclerView() {
-
         trips = dbHelper.listTrips();
         recyclerAdapter = new TripRecyclerViewAdapter(this, trips);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
