@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import uk.ac.gre.nt4738f.comp1786.core.entities.Expense;
 import uk.ac.gre.nt4738f.comp1786.core.entities.Trip;
+import uk.ac.gre.nt4738f.comp1786.core.payloads.UploadedExpense;
 
 public class TripDbHelper extends SQLiteOpenHelper {
 
@@ -133,6 +134,45 @@ public class TripDbHelper extends SQLiteOpenHelper {
             while (cursor.moveToNext());
         }
         cursor.close();
+        return storeItems;
+    }
+
+    public ArrayList<UploadedExpense> listExpenseUploads() {
+        ArrayList<UploadedExpense> storeItems = new ArrayList<>();
+
+        String sql = "SELECT " +
+                "e.Id, " +
+                "e.TripId, " +
+                "e.Type, " +
+                "e.Time, " +
+                "e.Amount, " +
+                "t.Name " +
+                "FROM " +
+                "Expenses AS e " +
+                "INNER JOIN Trips AS t ON e.TripId = t.Id " +
+                "ORDER BY " +
+                "e.Time DESC, " +
+                "e.Id DESC";
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(sql, null);
+        if (cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(0);
+                int tripId = cursor.getInt(1);
+                String type = cursor.getString(2);
+                LocalDate time = LocalDate.parse(cursor.getString(3));
+                double amount = cursor.getDouble(4);
+
+                String tripName = cursor.getString(5);
+
+                Expense expense = new Expense(id, tripId, type, time, amount);
+                UploadedExpense item = new UploadedExpense(tripName, expense);
+                storeItems.add(item);
+            }
+            while (cursor.moveToNext());
+        }
+        cursor.close();
+
         return storeItems;
     }
 }

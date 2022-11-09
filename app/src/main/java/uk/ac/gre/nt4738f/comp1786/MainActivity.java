@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -21,6 +22,7 @@ import uk.ac.gre.nt4738f.comp1786.ui.IOnRecycleItemClickListener;
 import uk.ac.gre.nt4738f.comp1786.ui.TripCreateActivity;
 import uk.ac.gre.nt4738f.comp1786.ui.TripDetailsActivity;
 import uk.ac.gre.nt4738f.comp1786.ui.TripRecyclerViewAdapter;
+import uk.ac.gre.nt4738f.comp1786.ui.UploadActivity;
 
 public class MainActivity extends AppCompatActivity {
     TripDbHelper dbHelper;
@@ -38,6 +40,12 @@ public class MainActivity extends AppCompatActivity {
         createBtn = findViewById(R.id.btnCreateTrip);
 
         setTripCreateBtn();
+
+        Button uploadBtn = findViewById(R.id.buttonUpload);
+        uploadBtn.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, UploadActivity.class);
+            startActivity(intent);
+        });
     }
 
     @Override

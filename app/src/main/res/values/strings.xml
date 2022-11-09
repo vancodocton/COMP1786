@@ -18,4 +18,6 @@
     <string name="textPlaceholderExpenseTime">Click here to pick time of Expense</string>
     <string name="hint_ExpenseAmount">1000</string>
     <string name="textLabelExpenseAmount">Expense Amount</string>
+    <string name="server_origin">https://comp1786.azurewebsites.net</string>
+    <string name="label_btn_upload">Upload</string>
 </resources>
