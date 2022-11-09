@@ -25,7 +25,7 @@ import uk.ac.gre.nt4738f.comp1786.core.entities.validators.ExpenseValidator;
 import uk.ac.gre.nt4738f.comp1786.core.entities.validators.IEntityValidator;
 import uk.ac.gre.nt4738f.comp1786.infrastructure.TripDbHelper;
 
-public class ExpenseCreateActivity extends AppCompatActivity implements IUpdateDate {
+public class ExpenseCreateActivity extends AppCompatActivity implements DatePickerFragment.IPickedDateObserver {
     TripDbHelper dbHelper;
     private int tripId;
     IEntityValidator<Expense> expenseValidator;
@@ -48,8 +48,7 @@ public class ExpenseCreateActivity extends AppCompatActivity implements IUpdateD
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == android.R.id.home)
-        {
+        if (item.getItemId() == android.R.id.home) {
             onBackPressed();
             return true;
         }
@@ -109,8 +108,8 @@ public class ExpenseCreateActivity extends AppCompatActivity implements IUpdateD
     }
 
     @Override
-    public void updateDatePicker(int textViewDatePickerId, @NotNull LocalDate date) {
-        TextView dobText = findViewById(textViewDatePickerId);
+    public void updateViewPickedDate(int viewPickedDateId, LocalDate date) {
+        TextView dobText = findViewById(viewPickedDateId);
         dobText.setText(date.toString());
     }
 }

@@ -26,7 +26,7 @@ import uk.ac.gre.nt4738f.comp1786.core.entities.validators.IEntityValidator;
 import uk.ac.gre.nt4738f.comp1786.core.entities.validators.TripValidator;
 import uk.ac.gre.nt4738f.comp1786.infrastructure.TripDbHelper;
 
-public class TripCreateActivity extends AppCompatActivity implements IUpdateDate {
+public class TripCreateActivity extends AppCompatActivity implements DatePickerFragment.IPickedDateObserver {
     TripDbHelper dbHelper;
     IEntityValidator<Trip> tripValidator;
 
@@ -129,8 +129,8 @@ public class TripCreateActivity extends AppCompatActivity implements IUpdateDate
     }
 
     @Override
-    public void updateDatePicker(int textViewDatePickerId, @NotNull LocalDate date) {
-        TextView dobText = findViewById(textViewDatePickerId);
-        dobText.setText(date.toString());
+    public void updateViewPickedDate(int viewPickedDateId, LocalDate date) {
+        TextView viewTextDatedPicker = findViewById(viewPickedDateId);
+        viewTextDatedPicker.setText(date.toString());
     }
 }

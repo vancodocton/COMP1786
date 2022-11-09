@@ -2,6 +2,7 @@ package uk.ac.gre.nt4738f.comp1786.ui;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.DatePicker;
@@ -14,11 +15,26 @@ import java.time.LocalDate;
 
 
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
-    private final int viewDatePickerId;
+    private final int viewPickedDateId;
+    private IPickedDateObserver listener;
+    public interface IPickedDateObserver{
+        void updateViewPickedDate(int viewPickedDateId, LocalDate date);
+    }
+    public DatePickerFragment(int viewPickedDateId) {
 
-    public DatePickerFragment(int viewDatePickerId) {
+        this.viewPickedDateId = viewPickedDateId;
+    }
 
-        this.viewDatePickerId = viewDatePickerId;
+    @Override
+    public void onAttach(@NonNull Context context) {
+
+        try {
+            listener = (IPickedDateObserver) context;
+        } catch (ClassCastException e) {
+            e.printStackTrace();
+            Log.e(this.getClass().toString(), "Caller must be implemented DatePickerFragment.IIUpdateDate", e);
+        }
+        super.onAttach(context);
     }
 
     @NonNull
@@ -35,12 +51,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
         LocalDate date = LocalDate.of(year, ++month, day);
 
-        if (getActivity() instanceof IUpdateDate){
-            ((IUpdateDate) getActivity()).updateDatePicker(viewDatePickerId, date);
-        }
-        else {
-            Log.e(this.getClass().getName(), "Cannot set date picked.");
-        }
+        listener.updateViewPickedDate(viewPickedDateId, date);
     }
 
     @Override

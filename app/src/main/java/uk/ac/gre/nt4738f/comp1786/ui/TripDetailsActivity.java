@@ -27,10 +27,12 @@ import uk.ac.gre.nt4738f.comp1786.infrastructure.TripDbHelper;
 
 public class TripDetailsActivity extends AppCompatActivity implements DeleteConfirmDialogFragment.IOnButtonClickListener {
     public static final String EXTRA_TRIP_ID = "uk.ac.gre.nt4738f.comp1786.EXTRA_TRIP_ID";
+    public static final String EXTRA_TRIP_EDITED = "uk.ac.gre.nt4738f.comp1786.EXTRA_TRIP_EDITED";
     private TripDbHelper dbHelper;
 
     private int tripId;
     private Trip trip;
+    private boolean isTripEdited = false;
     private RecyclerView recyclerView;
     private boolean isLoadExpenses;
     private boolean isLoadTrip;
@@ -44,6 +46,14 @@ public class TripDetailsActivity extends AppCompatActivity implements DeleteConf
         isLoadExpenses = true;
         isLoadTrip = true;
         recyclerView = findViewById(R.id.recyclerViewExpense);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent();
+        intent.putExtra(EXTRA_TRIP_EDITED, isTripEdited);
+        setResult(RESULT_CANCELED, intent);
+        super.onBackPressed();
     }
 
     @Override
@@ -102,7 +112,6 @@ public class TripDetailsActivity extends AppCompatActivity implements DeleteConf
                 }
             });
 
-
     private final ActivityResultLauncher<Intent> tripEditActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
@@ -112,6 +121,7 @@ public class TripDetailsActivity extends AppCompatActivity implements DeleteConf
                             .show();
                     trip = dbHelper.getTripById(tripId);
                     // setTripView();
+                    isTripEdited = true;
                     isLoadTrip = true;
                 }
             });

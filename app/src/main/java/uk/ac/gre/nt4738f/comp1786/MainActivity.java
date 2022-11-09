@@ -113,6 +113,13 @@ public class MainActivity extends AppCompatActivity
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
                 int resultCode = result.getResultCode();
+                Intent data = result.getData();
+
+                if (data != null) {
+                    boolean isTripEdited = data.getBooleanExtra(TripDetailsActivity.EXTRA_TRIP_EDITED, false);
+                    if (isTripEdited)
+                        isReload = true;
+                }
                 if (resultCode == Activity.RESULT_OK) {
                     Toast.makeText(getApplicationContext(), "Deleted Success.", Toast.LENGTH_SHORT)
                             .show();

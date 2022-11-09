@@ -23,12 +23,6 @@ public class TripDbHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, 2);
     }
 
-//    @Override
-//    public void onConfigure(SQLiteDatabase db) {
-//        super.onConfigure(db);
-//        db.setForeignKeyConstraintsEnabled(true);
-//    }
-
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(
