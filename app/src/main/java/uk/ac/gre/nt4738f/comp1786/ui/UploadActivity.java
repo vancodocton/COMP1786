@@ -61,7 +61,7 @@ public class UploadActivity extends AppCompatActivity {
     private String getUploadedPayload() {
         ArrayList<UploadedExpense> uploadedExpenses = dbHelper.listExpenseUploads();
 
-        String userId = "12312312";
+        String userId = getString(R.string.sample_user_id);
         UploadedPayload payload = new UploadedPayload(userId, uploadedExpenses);
 
         Gson gson = new Gson();

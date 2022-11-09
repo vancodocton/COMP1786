@@ -33,4 +33,5 @@
     <string name="content_description_add_expense">Add expense</string>
     <string name="content_description_upload">Upload to Cloud</string>
     <string name="upload">Upload</string>
+    <string name="sample_user_id">nt4738f</string>
 </resources>
