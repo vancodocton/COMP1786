@@ -20,4 +20,8 @@
     <string name="textLabelExpenseAmount">Expense Amount</string>
     <string name="server_origin">https://comp1786.azurewebsites.net</string>
     <string name="label_btn_upload">Upload</string>
+    <string name="content_description_search">Search</string>
+    <string name="search">Search</string>
+    <string name="content_description_delete">Delete</string>
+    <string name="delete">Delete</string>
 </resources>

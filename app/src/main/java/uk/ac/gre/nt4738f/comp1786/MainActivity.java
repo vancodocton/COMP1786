@@ -4,13 +4,16 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -35,6 +38,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         dbHelper = new TripDbHelper(getApplicationContext());
+
+        Toolbar topAppBar = (Toolbar) findViewById(R.id.topAppBar);
+        setSupportActionBar(topAppBar);
+        topAppBar.setTitle(getTitle());
 
         recyclerView = findViewById(R.id.recyclerViewTrips);
         createBtn = findViewById(R.id.btnCreateTrip);
@@ -99,6 +106,29 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(context, TripDetailsActivity.class);
             intent.putExtra(TripDetailsActivity.EXTRA_TRIP_ID, tripId);
             startActivity(intent);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.top_app_bar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.delete:
+                return true;
+            case R.id.search:
+                Toast.makeText(
+                        getApplicationContext(),
+                        "You asked to exit, but why not start another app?",
+                        Toast.LENGTH_LONG
+                ).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }
