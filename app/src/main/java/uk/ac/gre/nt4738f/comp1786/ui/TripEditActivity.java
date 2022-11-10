@@ -37,7 +37,7 @@ public class TripEditActivity extends AppCompatActivity implements DatePickerFra
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_trip_create);
+        setContentView(R.layout.activity_trip_edit);
         tripId = getIntent().getIntExtra(EXTRA_TRIP_ID, 0);
 
         dbHelper = new TripDbHelper(getApplicationContext());
@@ -58,7 +58,7 @@ public class TripEditActivity extends AppCompatActivity implements DatePickerFra
     }
 
     private void setTripEditSaveBtn() {
-        Button btnEdit = findViewById(R.id.btnCreateTripSave);
+        Button btnEdit = findViewById(R.id.btnEditTripSave);
         btnEdit.setOnClickListener(view -> {
             Trip trip = getTripFromInputs();
 

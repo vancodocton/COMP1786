@@ -35,4 +35,5 @@
     <string name="upload">Upload</string>
     <string name="sample_user_id">nt4738f</string>
     <string name="search_hint">Enter Trip Name</string>
+    <string name="text_save">Save</string>
 </resources>
