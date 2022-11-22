@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import uk.ac.gre.nt4738f.comp1786.R;
 import uk.ac.gre.nt4738f.comp1786.core.payloads.UploadedExpense;
 import uk.ac.gre.nt4738f.comp1786.core.payloads.UploadedPayload;
+import uk.ac.gre.nt4738f.comp1786.core.payloads.UploadedResponse;
 import uk.ac.gre.nt4738f.comp1786.infrastructure.TripDbHelper;
 
 public class UploadActivity extends AppCompatActivity {
@@ -107,15 +108,29 @@ public class UploadActivity extends AppCompatActivity {
 
         private void showResult(Result result) {
             activity.runOnUiThread(() -> {
-                if (result.isSucceed) new AlertDialog.Builder(activity)
-                        .setTitle("Upload successful")
-                        .setMessage(response)
-                        .show();
-                else new AlertDialog.Builder(activity)
-                        .setTitle(result.message)
-                        .setMessage(result + "\n" + result.exception.toString())
-                        .setNeutralButton("Back", null)
-                        .show();
+                if (result.isSucceed) {
+                    UploadedResponse json = new Gson().fromJson(response, UploadedResponse.class);
+                    String title, message;
+                    if (json == null) {
+                        title = "Not recognize the response";
+                        message = result.message;
+                    } else {
+                        title = json.uploadResponseCode;
+                        message = "UserId: " + json.userId + "\n"
+                                + "Message: " + json.message + "\n"
+                                + "Raw: " + response;
+                    }
+                    new AlertDialog.Builder(activity)
+                            .setTitle(title)
+                            .setMessage(message)
+                            .setNeutralButton("Back", null)
+                            .show();
+                } else
+                    new AlertDialog.Builder(activity)
+                            .setTitle(result.message)
+                            .setMessage(result + "\n" + result.exception.toString())
+                            .setNeutralButton("Back", null)
+                            .show();
             });
         }
 
