@@ -31,7 +31,7 @@ import uk.ac.gre.nt4738f.comp1786.infrastructure.TripDbHelper;
 public class UploadActivity extends AppCompatActivity {
 
     private TripDbHelper dbHelper;
-    private HttpURLConnection connection;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
